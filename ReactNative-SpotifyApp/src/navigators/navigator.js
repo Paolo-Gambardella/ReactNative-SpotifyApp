@@ -7,20 +7,6 @@ import SearchNavigator from './search';
 import theme from '../theme';
 
 const LoggedRouteConfigs = {
-  Playlists: {
-    screen: PlaylistsNavigator,
-    navigationOptions: () => ({
-      header: null,
-      tabBarLabel: 'Playlists',
-      tabBarIcon: ({ focused }) => (
-        <MaterialCommunityIcons
-          name="playlist-music-outline"
-          size={30}
-          color={focused ? theme.colors.green : theme.colors.white}
-        />
-      ),
-    }),
-  },
   Search: {
     screen: SearchNavigator,
     navigationOptions: () => ({
@@ -29,6 +15,20 @@ const LoggedRouteConfigs = {
       tabBarIcon: ({ focused }) => (
         <MaterialCommunityIcons
           name="magnify"
+          size={30}
+          color={focused ? theme.colors.green : theme.colors.white}
+        />
+      ),
+    }),
+  },
+  Playlists: {
+    screen: PlaylistsNavigator,
+    navigationOptions: () => ({
+      header: null,
+      tabBarLabel: 'Playlists',
+      tabBarIcon: ({ focused }) => (
+        <MaterialCommunityIcons
+          name="playlist-music-outline"
           size={30}
           color={focused ? theme.colors.green : theme.colors.white}
         />
