@@ -4,6 +4,7 @@ import loading from './loading';
 import artists from './artists';
 import playlists from './playlists';
 import user from './user';
+import alerts from './alerts';
 
 const appReducer = combineReducers({
   nav: navigation,
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
   artists,
   playlists,
   user,
+  alerts,
 });
 
 export default appReducer;
