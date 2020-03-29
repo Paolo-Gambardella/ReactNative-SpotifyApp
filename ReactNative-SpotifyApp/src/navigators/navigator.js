@@ -47,6 +47,7 @@ const LoggedNavigator = createBottomTabNavigator(LoggedRouteConfigs, {
       backgroundColor: theme.colors.black,
       borderTopWidth: 1,
       borderTopColor: theme.colors.veryLightGrey,
+      heigth: 80,
       ...ifIphoneX(
         {
           paddingBottom: 15,

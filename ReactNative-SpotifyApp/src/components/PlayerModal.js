@@ -5,6 +5,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
@@ -67,7 +68,7 @@ PlayerModal.propTypes = {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: height - 155,
+    top: Platform.OS === 'ios' ? height - 155 : height - 95,
     left: 0,
     right: 0,
     bottom: 0,
