@@ -8,7 +8,6 @@ import {
   SET_PLAYING_TRACK_INFO,
   SHOW_PLAYER_MODAL,
   GET_ARTISTS,
-  RESET_SEARCH,
   resultOf,
   errorOf,
 } from '../constants';
@@ -35,7 +34,7 @@ export const getPlaylists = () => (dispatch) => {
     .then((response) => {
       dispatch({
         type: resultOf(GET_PLAYLISTS),
-        data: response.data,
+        data: response.data.playlists,
       });
     })
     .catch((error) => {

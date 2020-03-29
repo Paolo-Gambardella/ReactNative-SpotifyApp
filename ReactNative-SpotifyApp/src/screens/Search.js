@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PlaylistCard, Input } from '../components';
+import { Input, ArtistCard } from '../components';
 import * as actions from '../actions';
 import theme from '../theme';
 
@@ -30,12 +23,6 @@ export class SearchScreen extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
   }
 
-  componentDidMount() {
-    const { getPlaylists } = this.props;
-
-    getPlaylists();
-  }
-
   goToDetailsScreen(playlistId) {
     const { navigation } = this.props;
 
@@ -52,7 +39,7 @@ export class SearchScreen extends Component {
   }
 
   render() {
-    const { reducer, loading, getPlaylists } = this.props;
+    const { reducer } = this.props;
     const { search } = this.state;
 
     return (
@@ -71,11 +58,13 @@ export class SearchScreen extends Component {
             style={styles.flatList}
             data={reducer.artists.items}
             renderItem={({ item }) => (
-              <View style={{ margin: 5 }}>
-                <Text style={{ color: 'white' }}>{item.name}</Text>
-              </View>
+              <ArtistCard
+                artistName={item.name}
+                artistImages={item.images}
+                onPress={() => console.log(item.name)}
+              />
             )}
-            keyExtractor={(item, index) => `Playlist-${index}`}
+            keyExtractor={(item, index) => `Artists-${index}`}
           />
         )}
       </View>
@@ -86,10 +75,8 @@ export class SearchScreen extends Component {
 export default connect(mapStateToProps, actions)(SearchScreen);
 
 SearchScreen.propTypes = {
-  loading: PropTypes.object.isRequired,
   reducer: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
-  getPlaylists: PropTypes.func.isRequired,
   getArtists: PropTypes.func.isRequired,
 };
 

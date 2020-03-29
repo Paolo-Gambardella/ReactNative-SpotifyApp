@@ -43,7 +43,7 @@ export class PlaylistsScreen extends Component {
         {reducer.playlists ? (
           <FlatList
             style={styles.flatList}
-            data={reducer.playlists.playlists.items}
+            data={reducer.playlists.items}
             renderItem={({ item }) => (
               <View style={{ margin: 5 }}>
                 <PlaylistCard
