@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux';
-import reducer from './reducer';
 import navigation from './navigation';
 import loading from './loading';
+import artists from './artists';
+import playlists from './playlists';
+import user from './user';
 
 const appReducer = combineReducers({
   nav: navigation,
-  reducer,
   loading,
+  artists,
+  playlists,
+  user,
 });
 
 export default appReducer;

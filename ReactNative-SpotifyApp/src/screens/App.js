@@ -9,7 +9,7 @@ import theme from '../theme';
 
 const mapStateToProps = (state) => ({
   state: state.nav,
-  reducer: state.reducer,
+  user: state.user,
 });
 
 const AppWithNavigationState = connect(mapStateToProps)(Root);
@@ -22,12 +22,12 @@ export class AppContainer extends Component {
   }
 
   render() {
-    const { reducer } = this.props;
+    const { user } = this.props;
     return (
       <View style={{ flex: 1, backgroundColor: theme.colors.black }}>
         <AppWithNavigationState />
-        {reducer.showPlayerModal && (
-          <PlayerModal trackInfo={reducer.playingTrackInfo} />
+        {user.showPlayerModal && (
+          <PlayerModal trackInfo={user.playingTrackInfo} />
         )}
       </View>
     );
@@ -37,5 +37,5 @@ export class AppContainer extends Component {
 export default connect(mapStateToProps, actions)(AppContainer);
 
 AppContainer.propTypes = {
-  reducer: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };

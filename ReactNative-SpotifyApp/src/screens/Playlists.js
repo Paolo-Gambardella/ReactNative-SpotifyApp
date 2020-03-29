@@ -13,8 +13,8 @@ import { PlaylistCard } from '../components';
 import * as actions from '../actions';
 import theme from '../theme';
 
-const mapStateToProps = ({ reducer, loading }) => ({
-  reducer,
+const mapStateToProps = ({ playlists, loading }) => ({
+  playlists,
   loading,
 });
 
@@ -33,17 +33,17 @@ export class PlaylistsScreen extends Component {
   }
 
   render() {
-    const { reducer, loading, getPlaylists } = this.props;
+    const { playlists, loading, getPlaylists } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Playlists</Text>
         </View>
-        {reducer.playlists ? (
+        {playlists.playlists ? (
           <FlatList
             style={styles.flatList}
-            data={reducer.playlists.items}
+            data={playlists.playlists.items}
             renderItem={({ item }) => (
               <View style={{ margin: 5 }}>
                 <PlaylistCard
@@ -76,9 +76,10 @@ export default connect(mapStateToProps, actions)(PlaylistsScreen);
 
 PlaylistsScreen.propTypes = {
   loading: PropTypes.object.isRequired,
-  reducer: PropTypes.object.isRequired,
+  playlists: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
   getPlaylists: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

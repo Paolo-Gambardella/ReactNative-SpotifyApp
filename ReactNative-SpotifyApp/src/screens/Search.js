@@ -6,8 +6,8 @@ import { Input, ArtistCard } from '../components';
 import * as actions from '../actions';
 import theme from '../theme';
 
-const mapStateToProps = ({ reducer, loading }) => ({
-  reducer,
+const mapStateToProps = ({ artists, loading }) => ({
+  artists,
   loading,
 });
 
@@ -23,12 +23,6 @@ export class SearchScreen extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
   }
 
-  goToDetailsScreen(playlistId) {
-    const { navigation } = this.props;
-
-    navigation.navigate('PlaylistDetail', playlistId);
-  }
-
   onSearchChange(search) {
     const { getArtists } = this.props;
 
@@ -39,7 +33,7 @@ export class SearchScreen extends Component {
   }
 
   render() {
-    const { reducer } = this.props;
+    const { artists, navigation } = this.props;
     const { search } = this.state;
 
     return (
@@ -53,15 +47,15 @@ export class SearchScreen extends Component {
             returnKeyType="search"
           />
         </View>
-        {reducer.artists && (
+        {artists.artists && (
           <FlatList
             style={styles.flatList}
-            data={reducer.artists.items}
+            data={artists.artists.items}
             renderItem={({ item }) => (
               <ArtistCard
                 artistName={item.name}
                 artistImages={item.images}
-                onPress={() => console.log(item.name)}
+                onPress={() => navigation.navigate('ArtistDetails', item)}
               />
             )}
             keyExtractor={(item, index) => `Artists-${index}`}
@@ -75,7 +69,7 @@ export class SearchScreen extends Component {
 export default connect(mapStateToProps, actions)(SearchScreen);
 
 SearchScreen.propTypes = {
-  reducer: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
   getArtists: PropTypes.func.isRequired,
 };

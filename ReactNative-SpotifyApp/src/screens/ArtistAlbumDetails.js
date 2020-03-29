@@ -12,25 +12,24 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as actions from '../actions';
 import theme from '../theme';
 import { PlaylistCard, TrackCard, BackButton } from '../components';
-import { numberFormater } from '../utils/Utils';
 
-const mapStateToProps = ({ playlists }) => ({
-  playlists,
+const mapStateToProps = ({ artists }) => ({
+  artists,
 });
 
-export class PlaylistDetailsScreen extends Component {
+export class ArtistAlbumDetailsScreen extends Component {
   componentDidMount() {
-    const { getPlaylistInfo, navigation } = this.props;
+    const { getAlbumTracks, navigation } = this.props;
 
-    getPlaylistInfo(navigation.state.params);
+    getAlbumTracks(navigation.state.params.id);
   }
 
   render() {
-    const { playlists, play, goBack, navigation } = this.props;
+    const { artists, play, goBack, navigation } = this.props;
 
     return (
       <View style={styles.container}>
-        {playlists.playlistInfo ? (
+        {artists.tracks ? (
           <View style={styles.container}>
             <View style={styles.backButtonContainer}>
               <BackButton onPress={() => goBack()} />
@@ -41,7 +40,7 @@ export class PlaylistDetailsScreen extends Component {
               <View style={styles.headerContainer}>
                 <View style={styles.headerInfoContainer}>
                   <PlaylistCard
-                    uri={playlists.playlistInfo.images[0].url}
+                    uri={navigation.state.params.images[0].url}
                     height={125}
                     width={125}
                     disabled
@@ -49,20 +48,7 @@ export class PlaylistDetailsScreen extends Component {
                   <View style={styles.playlistInfoContainer}>
                     <View>
                       <Text style={styles.playlistTitle}>
-                        {playlists.playlistInfo.name}
-                      </Text>
-                      <Text style={styles.playlistSubTitle}>
-                        {`Playlist by ${playlists.playlistInfo.owner.display_name}`}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text style={styles.playlistDescription}>
-                        {playlists.playlistInfo.description}
-                      </Text>
-                      <Text style={styles.playlistSubTitle}>
-                        {`${numberFormater(
-                          playlists.playlistInfo.followers.total
-                        )} followers`}
+                        {navigation.state.params.name}
                       </Text>
                     </View>
                   </View>
@@ -71,23 +57,23 @@ export class PlaylistDetailsScreen extends Component {
             </LinearGradient>
             <FlatList
               style={styles.flatList}
-              data={playlists.playlistInfo.tracks.items}
+              data={artists.tracks.items}
               renderItem={({ item }) => (
                 <TrackCard
-                  trackTitle={item.track?.name}
-                  trackArtists={item.track?.artists}
+                  trackTitle={item.name}
+                  trackArtists={item.artists}
                   onPress={() => {
                     play({
-                      url: item.track?.preview_url,
-                      title: item.track?.name,
-                      artists: item.track?.artists,
+                      url: item.preview_url,
+                      title: item.name,
+                      artists: item.artists,
                     });
                   }}
-                  disabled={!item.track?.preview_url}
+                  disabled={!item.preview_url}
                 />
               )}
               keyExtractor={(item, index) =>
-                `Playlist-${navigation.state.params}-${index}`
+                `Album-${navigation.state.params.id}-Track-${index}`
               }
             />
           </View>
@@ -101,11 +87,11 @@ export class PlaylistDetailsScreen extends Component {
   }
 }
 
-export default connect(mapStateToProps, actions)(PlaylistDetailsScreen);
+export default connect(mapStateToProps, actions)(ArtistAlbumDetailsScreen);
 
-PlaylistDetailsScreen.propTypes = {
-  playlists: PropTypes.object.isRequired,
-  getPlaylistInfo: PropTypes.func.isRequired,
+ArtistAlbumDetailsScreen.propTypes = {
+  artists: PropTypes.object.isRequired,
+  getAlbumTracks: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   play: PropTypes.func.isRequired,
   goBack: PropTypes.func.isRequired,
@@ -141,7 +127,7 @@ const styles = StyleSheet.create({
   playlistInfoContainer: {
     flex: 1,
     height: 125,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginLeft: 10,
   },
   playlistTitle: {
@@ -149,7 +135,7 @@ const styles = StyleSheet.create({
     color: theme.colors.white,
   },
   playlistSubTitle: {
-    fontSize: 10,
+    fontSize: 14,
     color: theme.colors.grey,
   },
   playlistDescription: {

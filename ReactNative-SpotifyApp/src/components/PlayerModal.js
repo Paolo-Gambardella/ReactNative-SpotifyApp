@@ -16,8 +16,8 @@ import * as actions from '../actions';
 
 const { width, height } = Dimensions.get('window');
 
-const mapStateToProps = ({ reducer }) => ({
-  reducer,
+const mapStateToProps = ({ user }) => ({
+  user,
 });
 
 export class PlayerModal extends Component {
@@ -28,7 +28,7 @@ export class PlayerModal extends Component {
   }
 
   render() {
-    const { trackInfo, pauseAndPlayRecording, reducer } = this.props;
+    const { trackInfo, pauseAndPlayRecording, user } = this.props;
 
     return (
       <View style={styles.container}>
@@ -42,7 +42,7 @@ export class PlayerModal extends Component {
           <TouchableOpacity onPress={() => pauseAndPlayRecording()}>
             <MaterialCommunityIcons
               name={
-                reducer.playingStatus === 0
+                user.playingStatus === 0
                   ? 'pause-circle-outline'
                   : 'play-circle-outline'
               }
@@ -61,7 +61,7 @@ export default connect(mapStateToProps, actions)(PlayerModal);
 PlayerModal.propTypes = {
   trackInfo: PropTypes.object.isRequired,
   pauseAndPlayRecording: PropTypes.func.isRequired,
-  reducer: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
